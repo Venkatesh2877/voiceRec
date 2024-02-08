@@ -1,0 +1,161 @@
+body{
+  color:white;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  margin: 0; 
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header{
+  width: 60%;
+  margin: auto;
+  border: 1px solid #0EA5CC;
+  border-radius: 20px;
+  margin-top: 30px;
+}
+
+.title{
+  font-weight: 800;
+  font-size: 46px;
+  line-height: 69px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 33px;
+  color: #525252;
+}
+
+.displayDetails{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin:20px auto;
+}
+
+.displayHeader{
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 52.5px;
+  margin-bottom: 20px;
+}
+
+.eachDetail{
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 48px;
+  color:  #525252;
+}
+
+.eachDetailAnswer{
+  color: #0A917C;
+}
+
+
+.eachCertificate{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 42px;
+  background-color: #383838;
+  padding: 0px 20px;
+  width: 250px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+
+
+
+
+.questionsContainer{
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translate(-50%,0%);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 48px;
+}
+
+.displayQuestions{
+  color:  #525252;
+}
+.displayAnswer{
+  color: #0A917C;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0%);
+}
+
+.inputContainer{
+  position: absolute;
+  top: 79%;
+  left: 20%;
+  width: 60%;
+  display: flex;
+  background-color: #1F1F1F;
+  border-radius: 12px;
+  padding:5px 5px 5px 30px;
+}
+
+.inputBox{
+  width: 100%;
+  height: 35px;
+  background-color: transparent;
+  border: 1px #1F1F1F solid;
+  color: white;
+}
+
+input{
+  font-size: 22px;
+}
+input:focus{
+  outline: none;
+}
+
+.inputArrow{
+  cursor: pointer;
+}
+
+
+.micContainer{
+  position: absolute;
+  top: 950px;
+  left: 50%;
+  transform: translate(-50%,0%);
+  z-index: 1;
+}
+
+.micIcon{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  cursor: pointer;
+}
+.micOff{
+  display: none;
+}
+
+.eclipse {
+  position: absolute;
+  width: 100%;
+  height: 415px; 
+  background-color: #1E1E1E; 
+  border-radius: 50%;
+  background-image: radial-gradient(#727272, #1E1E1E);
+  top: 920px;
+}
+
