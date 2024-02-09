@@ -1,16 +1,17 @@
 // const btn = document.querySelector(".talk");
 // const content = document.querySelector(".content");
 const question = document.querySelector(".displayQuestions");
-const answer=document.querySelector(".displayAnswer");
+const answer = document.querySelector(".displayAnswer");
 // const start = document.querySelector(".start");
 // const stop = document.querySelector(".stop");
-const micOn=document.querySelector('.micOn');
-const micOff=document.querySelector('.micOff');
-const inputArrow=document.querySelector('.inputArrow');
-const inputBox=document.querySelector('.inputBox');
+const micOn = document.querySelector(".micOn");
+const micOff = document.querySelector(".micOff");
+const inputArrow = document.querySelector(".inputArrow");
+const inputContainer= document.querySelector(".inputContainer");
+const inputBox = document.querySelector(".inputBox");
 
-
-const details=document.querySelector('.details');
+const details = document.querySelector(".details");
+const detailsPdf = document.querySelector(".detailsPdf");
 
 const Username = "Venkatesh";
 const inputs = [
@@ -31,12 +32,11 @@ const inputs = [
 ];
 var result = {};
 
-if('speechSynthesis' in window){
-	console.log("Web Speech API supported!")
+if ("speechSynthesis" in window) {
+  console.log("Web Speech API supported!");
 } else {
-	console.log("Web Speech API not supported :-(")   
+  console.log("Web Speech API not supported :-(");
 }
-
 
 function speak(sentence) {
   const text_speak = new SpeechSynthesisUtterance(sentence);
@@ -77,7 +77,6 @@ window.addEventListener("load", () => {
 //       const SpeechRecognition =
 //         window.SpeechRecognition || window.webkitSpeechRecognition;
 //       const recognition = new SpeechRecognition();
-   
 
 //         micOn.addEventListener('click',()=>{
 //           micOff.style.display="block"
@@ -100,7 +99,6 @@ window.addEventListener("load", () => {
 //           }
 //         })
 
-
 //       recognition.onresult = (event) => {
 //         const current = event.resultIndex;
 //         const transcript = event.results[current][0].transcript;
@@ -117,35 +115,41 @@ window.addEventListener("load", () => {
 //   speak("Thank you and upload all the required documents");
 // }
 
-
-
 async function speakInput() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechGrammarList =
+    window.SpeechGrammarList || window.webkitSpeechGrammarList;
   const recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
 
   for (const input of inputs) {
     speak(`Please share the ${input}`);
     question.textContent = `Please share the ${input}`;
 
     await new Promise((resolve) => {
-      inputArrow.addEventListener('click', () => {
-        // Handle text input
-        if (inputBox.value !== "") {
-          details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${inputBox.value}</span></div>`;
-          inputValue = inputBox.value;
+
+  
+      inputContainer.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log(details);
+          // details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${inputBox.value}</span></div>`;
+          details.innerHTML+=`<div><label for=${input} class="eachDetail">${input}&nbsp:&nbsp</label>
+          <input type="text" id=${input} name=${input} value=${inputBox.value}></div>`
           inputBox.value = "";
           resolve();
-        }
       });
+  
 
-      micOn.addEventListener('click', () => {
+
+      micOn.addEventListener("click", () => {
         // Handle mic activation
         micOff.style.display = "block";
         micOn.style.display = "none";
         recognition.start();
       });
 
-      micOff.addEventListener('click', () => {
+      micOff.addEventListener("click", () => {
         // Handle mic deactivation
         micOff.style.display = "none";
         micOn.style.display = "block";
@@ -157,17 +161,22 @@ async function speakInput() {
         const current = event.resultIndex;
         const transcript = event.results[current][0].transcript;
         result[input] = transcript;
-        details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${transcript}</span></div>`;
+        // details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${transcript}</span></div>`;
+        details.innerHTML+=`<div><label for=${input} class="eachDetail">${input}&nbsp:&nbsp</label>
+          <input type="text" id=${input} name=${input} value=${transcript}> </div>`
         resolve();
       };
 
       recognition.onerror = (event) => {
         // Handle speech recognition errors
-        console.error('Speech recognition error:', event.error);
+        speak("Sorry, I didn't get that. Please try again.");
+        console.error("Speech recognition error:", event.error);
         resolve();
       };
     });
   }
 
   speak("Thank you and upload all the required documents");
+  question.textContent = "Thank you and upload all the required documents";
+  detailsPdf.style.display = "block";
 }
