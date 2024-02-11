@@ -1,34 +1,54 @@
-// const btn = document.querySelector(".talk");
-// const content = document.querySelector(".content");
+
 const question = document.querySelector(".displayQuestions");
 const answer = document.querySelector(".displayAnswer");
-// const start = document.querySelector(".start");
-// const stop = document.querySelector(".stop");
+
 const micOn = document.querySelector(".micOn");
 const micOff = document.querySelector(".micOff");
 const inputArrow = document.querySelector(".inputArrow");
 const inputContainer= document.querySelector(".inputContainer");
 const inputBox = document.querySelector(".inputBox");
+const detailForm = document.querySelector(".detailForm");
 
 const details = document.querySelector(".details");
 const detailsPdf = document.querySelector(".detailsPdf");
+const eclipse = document.querySelector(".eclipse");
+const wave = document.querySelector(".wave");
+
+
 
 const Username = "Venkatesh";
+// const inputs = [
+//   "Company Name",
+//   "Financial Year Of The Comapny",
+//   "Proposed Bank Of The Company",
+//   "Activities Of The Company",
+//   "Facility Of The Company",
+//   "Legal Status Of The Company",
+//   "Share Capital",
+//   "Name Of The Share Holder",
+//   "Select Role Of The Company",
+//   "Emirates I D",
+//   "Share Holding Percentage",
+//   "Official Mail Address",
+//   "Contact Number",
+//   "Additional Details",
+// ];
+
 const inputs = [
-  "Company Name",
-  "Financial Year Of The Comapny",
-  "Proposed Bank Of The Company",
-  "Activities Of The Company",
-  "Facility Of The Company",
-  "Legal Status Of The Company",
-  "Share Capital",
-  "Name Of The Share Holder",
-  "Select Role Of The Company",
-  "Emirates I D",
-  "Share Holding Percentage",
-  "Official Mail Address",
-  "Contact Number",
-  "Additional Details",
+  {question:"Company Name", name:"companyName",answered:false},
+  {question:"Financial Year Of The Company",name:"FinancialYearOfTheCompany",answered:false},
+  {question:"Proposed Bank Of The Company",name:"ProposedBankOfTheCompany",answered:false},
+  {question:"Activities Of The Company",name:"ActivitiesOfTheDmccCompany",answered:false},
+  {question:"Facility Of The Company",name:"FacilityOfTheDmccCompany",answered:false},
+  {question:"Legal Status Of The Company",name:"LegalStatusOfTheCompany",answered:false},
+  {question:"Share Capital",name:"ShareCapital",answered:false},
+  {question:"Name Of The Share Holder",name:"NameOfTheShareHolder",answered:false},
+  {question:"Select Role Of The Company",name:"SelectRoleOfTheCompany",answered:false},
+  {question:"Emirates I D",name:"EmiratesId",answered:false},
+  {question:"Share Holding Percentage",name:"ShareHoldingPercentage",answered:false},
+  {question:"Official Mail Address",name:"OfficialMailAddress",answered:false},
+  {question:"Contact Number",name:"ContactNumber",answered:false},
+  {question:"Additional Details",name:"AdditionalDetails",answered:false}
 ];
 var result = {};
 
@@ -68,52 +88,6 @@ window.addEventListener("load", () => {
   speakInput();
 });
 
-// async function speakInput() {
-//   for (const input of inputs) {
-//     speak(`Please share the ${input}`);
-//     question.textContent=`Please share the ${input}`;
-//     // answer.textContent = "";
-//     await new Promise((resolve) => {
-//       const SpeechRecognition =
-//         window.SpeechRecognition || window.webkitSpeechRecognition;
-//       const recognition = new SpeechRecognition();
-
-//         micOn.addEventListener('click',()=>{
-//           micOff.style.display="block"
-//           micOn.style.display="none"
-//           recognition.start();
-//         })
-
-//         micOff.addEventListener('click',()=>{
-//           micOff.style.display="none"
-//           micOn.style.display="block"
-//           recognition.stop();
-//         })
-
-//         inputArrow.addEventListener('click',()=>{
-//           console.log(inputBox.value)
-//           if(inputBox.value!=""){
-//             details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${inputBox.value}</span></div>`;
-//             inputBox.value="";
-//             resolve();
-//           }
-//         })
-
-//       recognition.onresult = (event) => {
-//         const current = event.resultIndex;
-//         const transcript = event.results[current][0].transcript;
-//         // answer.textContent = transcript;
-//         console.log(input);
-//         result[input]=transcript;
-//         console.log(result);
-//         details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${transcript}</span></div>`;
-
-//         resolve();
-//       };
-//     });
-//   }
-//   speak("Thank you and upload all the required documents");
-// }
 
 async function speakInput() {
   const SpeechRecognition =
@@ -124,20 +98,22 @@ async function speakInput() {
   recognition.lang = "en-US";
 
   for (const input of inputs) {
-    speak(`Please share the ${input}`);
-    question.textContent = `Please share the ${input}`;
+    speak(`Please share the ${input.question}`);
+    question.textContent = `Please share the ${input.question}`;
 
     await new Promise((resolve) => {
 
-  
+      
       inputContainer.addEventListener("submit", (e) => {
         e.preventDefault();
-        console.log(details);
-          // details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${inputBox.value}</span></div>`;
-          details.innerHTML+=`<div><label for=${input} class="eachDetail">${input}&nbsp:&nbsp</label>
-          <input type="text" id=${input} name=${input} value=${inputBox.value}></div>`
+        if(!input.answered){
+          input.answered=true;
+             // details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${inputBox.value}</span></div>`;
+          details.innerHTML+=`<div><label for=${input.name} class="eachDetail">${input.question}&nbsp:&nbsp</label>
+          <input type="text" id=${input.name} name=${input.name} value=${inputBox.value}></div>`
           inputBox.value = "";
           resolve();
+        }
       });
   
 
@@ -146,6 +122,8 @@ async function speakInput() {
         // Handle mic activation
         micOff.style.display = "block";
         micOn.style.display = "none";
+        eclipse.style.display='none';
+        wave.style.display='block';
         recognition.start();
       });
 
@@ -153,6 +131,8 @@ async function speakInput() {
         // Handle mic deactivation
         micOff.style.display = "none";
         micOn.style.display = "block";
+        eclipse.style.display='block';
+        wave.style.display='none';
         recognition.stop();
       });
 
@@ -161,9 +141,10 @@ async function speakInput() {
         const current = event.resultIndex;
         const transcript = event.results[current][0].transcript;
         result[input] = transcript;
+        input.answered=true;
         // details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${transcript}</span></div>`;
-        details.innerHTML+=`<div><label for=${input} class="eachDetail">${input}&nbsp:&nbsp</label>
-          <input type="text" id=${input} name=${input} value=${transcript}> </div>`
+        details.innerHTML+=`<div><label for=${input.name} class="eachDetail">${input.question}&nbsp:&nbsp</label>
+          <input type="text" id=${input.name} name=${input.name} value=${transcript}> </div>`
         resolve();
       };
 
@@ -171,7 +152,6 @@ async function speakInput() {
         // Handle speech recognition errors
         speak("Sorry, I didn't get that. Please try again.");
         console.error("Speech recognition error:", event.error);
-        resolve();
       };
     });
   }
@@ -180,3 +160,9 @@ async function speakInput() {
   question.textContent = "Thank you and upload all the required documents";
   detailsPdf.style.display = "block";
 }
+
+
+detailForm.addEventListener("submit",(e)=>{
+  e.preventDefault();
+  console.log(e.target.elements)
+})
