@@ -109,7 +109,7 @@ async function speakInput() {
         if(!input.answered){
           input.answered=true;
              // details.innerHTML += `<div class="eachDetail">${input}&nbsp:&nbsp<span class="eachDetailAnswer">${inputBox.value}</span></div>`;
-          details.innerHTML+=`<div><label for=${input.name} class="eachDetail">${input.question}&nbsp:&nbsp</label>
+          details.innerHTML+=`<div class="eachDetail"><label for=${input.name} >${input.question}&nbsp:&nbsp</label>
           <input type="text" id=${input.name} name=${input.name} value=${inputBox.value}></div>`
           inputBox.value = "";
           resolve();
@@ -164,5 +164,5 @@ async function speakInput() {
 
 detailForm.addEventListener("submit",(e)=>{
   e.preventDefault();
-  console.log(e.target.elements)
+  console.log(e.target.elements);
 })
